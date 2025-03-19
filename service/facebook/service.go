@@ -11,8 +11,12 @@ func NewService(client *facebook.Client) *Service {
 	}
 }
 
-func (s *Service) Login() string {
-	return s.client.Login()
+func (s *Service) GetLoginUrl() string {
+	return s.client.GetLoginURL()
+}
+
+func (s *Service) Login(code string) (string, error) {
+	return s.client.Login(code)
 }
 
 func (s *Service) Post(post model.Post, accessToken string) error {
