@@ -1,4 +1,4 @@
-package facebook
+package model
 
 type Post struct {
 	Message string

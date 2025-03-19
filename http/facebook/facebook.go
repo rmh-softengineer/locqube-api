@@ -20,7 +20,7 @@ func (c *Client) Login() string {
 		c.facebookAppID, c.redirectURL)
 }
 
-func (c *Client) Post(post facebook.Post, accessToken string) error {
+func (c *Client) Post(post model.Post, accessToken string) error {
 	postURL := c.buildPostURL(post, accessToken)
 
 	_, err := http.Post(postURL, "application/json", nil)
@@ -31,7 +31,7 @@ func (c *Client) Post(post facebook.Post, accessToken string) error {
 	return nil
 }
 
-func (c *Client) buildPostURL(post facebook.Post, accessToken string) string {
+func (c *Client) buildPostURL(post model.Post, accessToken string) string {
 	if post.Link != nil {
 		return fmt.Sprintf("https://graph.facebook.com/me/feed?message=%s&link=%s&access_token=%s",
 			post.Message, *post.Link, accessToken)
