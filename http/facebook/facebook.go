@@ -9,17 +9,18 @@ import (
 	"github.com/rmh-softengineer/locqube/api/model"
 )
 
-func NewClient(appID, appSecret string) *client {
+func NewClient(httpClient http.Client, appID, appSecret string) *client {
 	return &client{
 		facebookAppID:     appID,
 		facebookAppSecret: appSecret,
+		httpClient:        httpClient,
 	}
 }
 
 func (c *client) Login(accessToken string) (*string, error) {
 	userID, err := c.validateFacebookToken(accessToken)
 	if err != nil {
-		return nil, fmt.Errorf("invalid facebook token: %w", err)
+		return nil, errors.New("invalid facebook token")
 	}
 
 	token := fmt.Sprintf("mock-jwt-token-for-%s", *userID) // Generate a real JWT token
@@ -30,9 +31,9 @@ func (c *client) Login(accessToken string) (*string, error) {
 func (c *client) Post(post model.Post, accessToken string) error {
 	postURL := c.buildPostURL(post, accessToken)
 
-	resp, err := http.Post(postURL, "application/json", nil)
+	resp, err := c.httpClient.Post(postURL, "application/json", nil)
 	if err != nil {
-		return fmt.Errorf("failed to post to Facebook: %w", err)
+		return errors.New("failed to share a post")
 	}
 	defer resp.Body.Close()
 
@@ -53,7 +54,7 @@ func (c *client) validateFacebookToken(accessToken string) (*string, error) {
 	validationURL := fmt.Sprintf("https://graph.facebook.com/debug_token?input_token=%s&access_token=%s|%s",
 		accessToken, c.facebookAppID, c.facebookAppSecret)
 
-	resp, err := http.Get(validationURL)
+	resp, err := c.httpClient.Get(validationURL)
 	if err != nil {
 		return nil, err
 	}

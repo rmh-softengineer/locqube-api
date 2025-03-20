@@ -9,11 +9,11 @@ import (
 	"github.com/rmh-softengineer/locqube/api/model"
 )
 
-func NewRepository() *PropertyRepository {
-	return &PropertyRepository{}
+func NewRepository() *repository {
+	return &repository{}
 }
 
-func (r *PropertyRepository) GetProperties() ([]model.Property, error) {
+func (r *repository) GetProperties() ([]model.Property, error) {
 	// Find and read the properties.json file
 	filePath := filepath.Join("json", "properties.json")
 	file, err := os.Open(filePath)

@@ -1,9 +1,14 @@
 package property
 
 import (
+	"github.com/rmh-softengineer/locqube/api/model"
 	"github.com/rmh-softengineer/locqube/api/repository/property"
 )
 
-type PropertyService struct {
-	repository *property.PropertyRepository
+type Service interface {
+	GetProperties() ([]model.Property, error)
+}
+
+type service struct {
+	repository property.Repository
 }

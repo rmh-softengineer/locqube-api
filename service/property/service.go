@@ -5,12 +5,12 @@ import (
 	"github.com/rmh-softengineer/locqube/api/repository/property"
 )
 
-func NewService(repository *property.PropertyRepository) *PropertyService {
-	return &PropertyService{
+func NewService(repository property.Repository) *service {
+	return &service{
 		repository: repository,
 	}
 }
 
-func (s *PropertyService) GetProperties() ([]model.Property, error) {
+func (s *service) GetProperties() ([]model.Property, error) {
 	return s.repository.GetProperties()
 }

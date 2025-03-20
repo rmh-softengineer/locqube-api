@@ -1,6 +1,10 @@
 package facebook
 
-import "github.com/rmh-softengineer/locqube/api/model"
+import (
+	"net/http"
+
+	"github.com/rmh-softengineer/locqube/api/model"
+)
 
 type Client interface {
 	Login(accessToken string) (*string, error)
@@ -9,4 +13,5 @@ type Client interface {
 type client struct {
 	facebookAppID     string
 	facebookAppSecret string
+	httpClient        http.Client
 }

@@ -16,8 +16,8 @@ import (
 var env appEnv
 
 type appEnv struct {
-	FacebookService *facebookService.Service
-	PropertyService *propertyService.PropertyService
+	FacebookService facebookService.Service
+	PropertyService propertyService.Service
 }
 
 func StartServer() {
@@ -37,7 +37,7 @@ func StartServer() {
 
 	facebookAppSecret := "6431655c5665aae0c820d90da9666c4c"
 
-	facebookClient := facebookClient.NewClient(facebookAppID, facebookAppSecret)
+	facebookClient := facebookClient.NewClient(*http.DefaultClient, facebookAppID, facebookAppSecret)
 
 	facebookService := facebookService.NewService(facebookClient)
 
