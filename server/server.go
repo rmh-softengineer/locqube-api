@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	facebookClient "github.com/rmh-softengineer/locqube/api/http/facebook"
 	propertyRepository "github.com/rmh-softengineer/locqube/api/repository/property"
@@ -23,7 +24,15 @@ func StartServer() {
 	r := mux.NewRouter()
 	r.HandleFunc("/auth/login", handleFacebookLogin)
 	r.HandleFunc("/auth/callback", handleFacebookCallback)
-	r.HandleFunc("/post", postToFacebook).Methods("POST")
+	r.HandleFunc("/share-fb-post", handlePostToFacebook).Methods("POST")
+	r.HandleFunc("/properties", handleGetProperties).Methods("GET")
+
+	// CORS middleware
+	corsHandler := handlers.CORS(
+		handlers.AllowedOrigins([]string{"*"}),                             // Allow all origins (change this for security)
+		handlers.AllowedMethods([]string{"GET", "POST", "OPTIONS"}),        // Allowed HTTP methods
+		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}), // Allowed headers
+	)
 
 	facebookAppID := ""
 
@@ -45,5 +54,5 @@ func StartServer() {
 	}
 
 	fmt.Println("Server running on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Fatal(http.ListenAndServe(":8080", corsHandler(r)))
 }

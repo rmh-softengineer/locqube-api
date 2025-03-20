@@ -31,12 +31,12 @@ func handleFacebookCallback(w http.ResponseWriter, r *http.Request) {
 	userID := r.Header.Get("X-User-ID")
 	userTokens[userID] = accessToken
 
-	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"access_token": accessToken})
 }
 
-func postToFacebook(w http.ResponseWriter, r *http.Request) {
+func handlePostToFacebook(w http.ResponseWriter, r *http.Request) {
 	var post model.Post
 
 	err := json.NewDecoder(r.Body).Decode(&post)
@@ -58,4 +58,16 @@ func postToFacebook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
+}
+
+func handleGetProperties(w http.ResponseWriter, r *http.Request) {
+	properties, err := env.PropertyService.GetProperties()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(properties)
 }
