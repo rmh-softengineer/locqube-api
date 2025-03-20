@@ -9,14 +9,14 @@ import (
 	"github.com/rmh-softengineer/locqube/api/model"
 )
 
-func NewClient(appID, appSecret string) *Client {
-	return &Client{
+func NewClient(appID, appSecret string) *client {
+	return &client{
 		facebookAppID:     appID,
 		facebookAppSecret: appSecret,
 	}
 }
 
-func (c *Client) Login(accessToken string) (*string, error) {
+func (c *client) Login(accessToken string) (*string, error) {
 	userID, err := c.validateFacebookToken(accessToken)
 	if err != nil {
 		return nil, fmt.Errorf("invalid facebook token: %w", err)
@@ -27,7 +27,7 @@ func (c *Client) Login(accessToken string) (*string, error) {
 	return &token, nil
 }
 
-func (c *Client) Post(post model.Post, accessToken string) error {
+func (c *client) Post(post model.Post, accessToken string) error {
 	postURL := c.buildPostURL(post, accessToken)
 
 	resp, err := http.Post(postURL, "application/json", nil)
@@ -39,7 +39,7 @@ func (c *Client) Post(post model.Post, accessToken string) error {
 	return nil
 }
 
-func (c *Client) buildPostURL(post model.Post, accessToken string) string {
+func (c *client) buildPostURL(post model.Post, accessToken string) string {
 	if post.Link != nil {
 		return fmt.Sprintf("https://graph.facebook.com/me/feed?message=%s&link=%s&access_token=%s",
 			post.Message, *post.Link, accessToken)
@@ -49,7 +49,7 @@ func (c *Client) buildPostURL(post model.Post, accessToken string) string {
 		post.Message, accessToken)
 }
 
-func (c *Client) validateFacebookToken(accessToken string) (*string, error) {
+func (c *client) validateFacebookToken(accessToken string) (*string, error) {
 	validationURL := fmt.Sprintf("https://graph.facebook.com/debug_token?input_token=%s&access_token=%s|%s",
 		accessToken, c.facebookAppID, c.facebookAppSecret)
 
