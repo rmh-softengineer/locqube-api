@@ -18,12 +18,12 @@ func NewClient(appID, appSecret, redirectURL string) *Client {
 }
 
 func (c *Client) GetLoginURL() string {
-	return fmt.Sprintf("https://www.facebook.com/v17.0/dialog/oauth?client_id=%s&redirect_uri=%s&scope=public_profile,email,pages_manage_posts,publish_video",
+	return fmt.Sprintf("https://www.facebook.com/v22.0/dialog/oauth?client_id=%s&redirect_uri=%s&scope=public_profile,email",
 		c.facebookAppID, c.redirectURL)
 }
 
 func (c *Client) Login(code string) (string, error) {
-	tokenURL := fmt.Sprintf("https://graph.facebook.com/v17.0/oauth/access_token?client_id=%s&redirect_uri=%s&client_secret=%s&code=%s",
+	tokenURL := fmt.Sprintf("https://graph.facebook.com/v22.0/oauth/access_token?client_id=%s&redirect_uri=%s&client_secret=%s&code=%s",
 		c.facebookAppID, c.redirectURL, c.facebookAppSecret, code)
 
 	resp, err := http.Get(tokenURL)

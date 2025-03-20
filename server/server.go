@@ -34,9 +34,9 @@ func StartServer() {
 		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}), // Allowed headers
 	)
 
-	facebookAppID := ""
+	facebookAppID := "640002862073324"
 
-	facebookAppSecret := ""
+	facebookAppSecret := "6431655c5665aae0c820d90da9666c4c"
 
 	redirectURL := "http://localhost:8080/auth/callback"
 

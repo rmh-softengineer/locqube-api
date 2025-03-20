@@ -12,13 +12,14 @@ var userTokens = map[string]string{}
 
 func handleFacebookLogin(w http.ResponseWriter, r *http.Request) {
 	authURL := env.FacebookService.GetLoginUrl()
+
 	http.Redirect(w, r, authURL, http.StatusSeeOther)
 }
 
 func handleFacebookCallback(w http.ResponseWriter, r *http.Request) {
 	code := r.URL.Query().Get("code")
 	if code == "" {
-		http.Error(w, "Missing authorization code", http.StatusBadRequest)
+		http.Error(w, "missing authorization code", http.StatusBadRequest)
 		return
 	}
 
@@ -46,9 +47,10 @@ func handlePostToFacebook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	userID := r.Header.Get("X-User-ID")
+
 	accessToken, ok := userTokens[userID]
 	if !ok {
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		http.Error(w, "unauthorized", http.StatusUnauthorized)
 	}
 
 	err = env.FacebookService.Post(post, accessToken)
