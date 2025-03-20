@@ -1,0 +1,122 @@
+[
+    {
+        "id": "1001",
+        "title": "Modern 4-Bedroom Home in Danbury, CT",
+        "description": "Spacious 4-bedroom, 3.5-bath home with an open floor plan, gourmet kitchen, and a private backyard.",
+        "price": 575000,
+        "property_type": "Single Family",
+        "bedrooms": 4,
+        "baths": 3,
+        "half_baths": 1,
+        "living_area_sqft": 2750,
+        "lot_size_sqft": 10000,
+        "address": {
+            "street": "123 Maple Street",
+            "city": "Danbury",
+            "state": "CT",
+            "zip": "06810"
+        },
+        "images": [
+            "https://locqube.com/uploads/property-1001-1.jpg",
+            "https://locqube.com/uploads/property-1001-2.jpg"
+        ],
+        "listing_url": "https://locqube.com/property/1001",
+        "video_url": "https://locqube.com/uploads/property-tour-1001.mp4"
+    },
+    {
+        "id": "1002",
+        "title": "Cozy 2-Bedroom Condo in Miami, FL",
+        "description": "Stylish 2-bedroom, 2-bath condo with a waterfront view and premium amenities.",
+        "price": 450000,
+        "property_type": "Condo",
+        "bedrooms": 2,
+        "baths": 2,
+        "half_baths": 0,
+        "living_area_sqft": 1350,
+        "lot_size_sqft": null,
+        "address": {
+            "street": "789 Ocean Drive",
+            "city": "Miami",
+            "state": "FL",
+            "zip": "33139"
+        },
+        "images": [
+            "https://locqube.com/uploads/property-1002-1.jpg",
+            "https://locqube.com/uploads/property-1002-2.jpg"
+        ],
+        "listing_url": "https://locqube.com/property/1002",
+        "video_url": "https://locqube.com/uploads/property-tour-1002.mp4"
+    },
+    {
+        "id": "1003",
+        "title": "Luxury Penthouse in New York, NY",
+        "description": "Exclusive penthouse with panoramic city views, high ceilings, and state-of-the-art interiors.",
+        "price": 2500000,
+        "property_type": "Townhouse",
+        "bedrooms": 3,
+        "baths": 3,
+        "half_baths": 1,
+        "living_area_sqft": 3200,
+        "lot_size_sqft": null,
+        "address": {
+            "street": "1 Central Park West",
+            "city": "New York",
+            "state": "NY",
+            "zip": "10023"
+        },
+        "images": [
+            "https://locqube.com/uploads/property-1003-1.jpg",
+            "https://locqube.com/uploads/property-1003-2.jpg"
+        ],
+        "listing_url": "https://locqube.com/property/1003",
+        "video_url": "https://locqube.com/uploads/property-tour-1003.mp4"
+    },
+    {
+        "id": "1004",
+        "title": "Charming 3-Bedroom Home in Austin, TX",
+        "description": "Beautifully renovated 3-bedroom, 2-bath home with a spacious backyard and modern upgrades.",
+        "price": 525000,
+        "property_type": "Single Family",
+        "bedrooms": 3,
+        "baths": 2,
+        "half_baths": 0,
+        "living_area_sqft": 1900,
+        "lot_size_sqft": 8000,
+        "address": {
+            "street": "456 Hilltop Lane",
+            "city": "Austin",
+            "state": "TX",
+            "zip": "78704"
+        },
+        "images": [
+            "https://locqube.com/uploads/property-1004-1.jpg",
+            "https://locqube.com/uploads/property-1004-2.jpg"
+        ],
+        "listing_url": "https://locqube.com/property/1004",
+        "video_url": "https://locqube.com/uploads/property-tour-1004.mp4"
+    },
+    {
+        "id": "1005",
+        "title": "Beachfront house in Malibu, CA",
+        "description": "Stunning 5-bedroom house with breathtaking ocean views and private beach access.",
+        "price": 6500000,
+        "property_type": "Single Family",
+        "bedrooms": 5,
+        "baths": 4,
+        "half_baths": 1,
+        "living_area_sqft": 5000,
+        "lot_size_sqft": 30000,
+        "address": {
+            "street": "567 Ocean Breeze Dr",
+            "city": "Malibu",
+            "state": "CA",
+            "zip": "90265"
+        },
+        "images": [
+            "https://locqube.com/uploads/property-1005-1.jpg",
+            "https://locqube.com/uploads/property-1005-2.jpg"
+        ],
+        "listing_url": "https://locqube.com/property/1005",
+        "video_url": "https://locqube.com/uploads/property-tour-1005.mp4"
+    }
+]

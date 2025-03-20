@@ -8,7 +8,7 @@ type Address struct {
 }
 
 type Property struct {
-	PropertyID     string   `json:"property_id"`
+	ID             string   `json:"id"`
 	Title          string   `json:"title"`
 	Description    string   `json:"description"`
 	Price          int      `json:"price"`
