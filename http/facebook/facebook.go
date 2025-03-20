@@ -9,41 +9,22 @@ import (
 	"github.com/rmh-softengineer/locqube/api/model"
 )
 
-func NewClient(appID, appSecret, redirectURL string) *Client {
+func NewClient(appID, appSecret string) *Client {
 	return &Client{
 		facebookAppID:     appID,
 		facebookAppSecret: appSecret,
-		redirectURL:       redirectURL,
 	}
 }
 
-func (c *Client) GetLoginURL() string {
-	return fmt.Sprintf("https://www.facebook.com/v22.0/dialog/oauth?client_id=%s&redirect_uri=%s&scope=public_profile,email",
-		c.facebookAppID, c.redirectURL)
-}
-
-func (c *Client) Login(code string) (string, error) {
-	tokenURL := fmt.Sprintf("https://graph.facebook.com/v22.0/oauth/access_token?client_id=%s&redirect_uri=%s&client_secret=%s&code=%s",
-		c.facebookAppID, c.redirectURL, c.facebookAppSecret, code)
-
-	resp, err := http.Get(tokenURL)
+func (c *Client) Login(accessToken string) (*string, error) {
+	userID, err := c.validateFacebookToken(accessToken)
 	if err != nil {
-		return "", fmt.Errorf("failed to get access token: %w", err)
-	}
-	defer resp.Body.Close()
-
-	var fbToken map[string]interface{}
-
-	if err = json.NewDecoder(resp.Body).Decode(&fbToken); err != nil {
-		return "", fmt.Errorf("failed to decode access token response: %w", err)
+		return nil, fmt.Errorf("invalid facebook token: %w", err)
 	}
 
-	accessToken, ok := fbToken["access_token"].(string)
-	if !ok {
-		return "", errors.New("invalid access token response")
-	}
+	token := fmt.Sprintf("mock-jwt-token-for-%s", *userID) // Generate a real JWT token
 
-	return accessToken, nil
+	return &token, nil
 }
 
 func (c *Client) Post(post model.Post, accessToken string) error {
@@ -66,4 +47,27 @@ func (c *Client) buildPostURL(post model.Post, accessToken string) string {
 
 	return fmt.Sprintf("https://graph.facebook.com/me/feed?message=%s&access_token=%s",
 		post.Message, accessToken)
+}
+
+func (c *Client) validateFacebookToken(accessToken string) (*string, error) {
+	validationURL := fmt.Sprintf("https://graph.facebook.com/debug_token?input_token=%s&access_token=%s|%s",
+		accessToken, c.facebookAppID, c.facebookAppSecret)
+
+	resp, err := http.Get(validationURL)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var validationResponse model.ValidationTokenResponse
+
+	if err := json.NewDecoder(resp.Body).Decode(&validationResponse); err != nil {
+		return nil, err
+	}
+
+	if !validationResponse.Data.IsValid {
+		return nil, errors.New("invalid token")
+	}
+
+	return &validationResponse.Data.UserID, nil
 }

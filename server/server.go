@@ -22,8 +22,7 @@ type appEnv struct {
 
 func StartServer() {
 	r := mux.NewRouter()
-	r.HandleFunc("/auth/login", handleFacebookLogin)
-	r.HandleFunc("/auth/callback", handleFacebookCallback)
+	r.HandleFunc("/auth/login", handleLoginToFacebook).Methods("POST")
 	r.HandleFunc("/share-fb-post", handlePostToFacebook).Methods("POST")
 	r.HandleFunc("/properties", handleGetProperties).Methods("GET")
 
@@ -38,9 +37,7 @@ func StartServer() {
 
 	facebookAppSecret := "6431655c5665aae0c820d90da9666c4c"
 
-	redirectURL := "http://localhost:8080/auth/callback"
-
-	facebookClient := facebookClient.NewClient(facebookAppID, facebookAppSecret, redirectURL)
+	facebookClient := facebookClient.NewClient(facebookAppID, facebookAppSecret)
 
 	facebookService := facebookService.NewService(facebookClient)
 
